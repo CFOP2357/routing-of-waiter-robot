@@ -90,6 +90,18 @@ def turn_right():
     follow_line(DRIVE_SPEED)
     robot.stop(Stop.BRAKE)
 
+def turn_left():
+    robot.drive(50, -50)
+    wait(1000)
+
+    right_is_white = right_line_sensor.reflection() > 15
+    while right_is_white:
+        right_is_white = right_line_sensor.reflection() > 15
+        robot.drive(50, -50)
+
+    follow_line(DRIVE_SPEED)
+    robot.stop(Stop.BRAKE)
+
 
 
 # Create your objects here.
@@ -98,8 +110,8 @@ ev3 = EV3Brick()
 # Write your program here.
 ev3.speaker.beep()
 
-turn_right()
-move_forward()
-move_forward()
+for x in range(0, 16):
+    turn_left()
+    move_forward()
 
 ev3.speaker.beep()
