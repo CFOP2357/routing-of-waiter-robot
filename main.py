@@ -1,14 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 
-import motion_and_perception as robot
+import path_manager
 
-#la pista mide 9x4
-
-robot.move_front()
-robot.move_back()
-
-for x in range(0, 4):
-    robot.turn_left()
-    robot.move_front()
-
-ev3.speaker.beep()
+path_manager.follow_path("fffrfblrlfflfbbr")
+path_manager.follow_path("lflffffffff")

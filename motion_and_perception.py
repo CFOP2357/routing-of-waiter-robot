@@ -63,7 +63,7 @@ def move_front():
 
     follow_line(DRIVE_SPEED)
 
-def turn_right():
+def move_right():
     """
     Robot moves to the corner in the right
     """
@@ -77,7 +77,7 @@ def turn_right():
 
     follow_line(DRIVE_SPEED)
 
-def turn_left():
+def move_left():
     """
     Robot moves to the corner in the left
     """
