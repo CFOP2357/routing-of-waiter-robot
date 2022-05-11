@@ -23,12 +23,15 @@ DRIVE_SPEED = 120
 
 # This program requires LEGO EV3 MicroPython v2.0 or higher.
 # Click "Open user guide" on the EV3 extension tab for more information.
-def move_backward(speed):
+def move_backward():
     """
     Robot moves backward following a line to the next corner on the back
     """
+    speed = 50
+
     robot.drive(-50, 0)
     wait(500)
+
     while True:
         left_is_white = left_line_sensor.reflection() > 15
         right_is_white = right_line_sensor.reflection() > 15
@@ -36,21 +39,25 @@ def move_backward(speed):
         if left_is_white and right_is_white:
             robot.drive(-speed, 0)
         if left_is_white and not right_is_white:
-            robot.drive(-speed, 30)
+            robot.drive(speed, 30)
         if not left_is_white and right_is_white:
-            robot.drive(-speed, -30)
+            robot.drive(speed, -30)
         if not left_is_white and not right_is_white:
             robot.stop(Stop.BRAKE)
             break
 
         wait(10)
 
-def move_forward(speed):
+def move_forward():
     """
     Robot moves forward following a line to the next corner on the front
     """
+
+    speed = DRIVE_SPEED
+    
     robot.drive(50, 0)
     wait(500)
+
     while True:
         left_is_white = left_line_sensor.reflection() > 15
         right_is_white = right_line_sensor.reflection() > 15
@@ -71,7 +78,12 @@ def move_forward(speed):
 ev3 = EV3Brick()
 
 # Write your program here.
-ev3.speaker.beep()
+#ev3.speaker.beep()
 
-for x in range(1, 8):
-    move_forward(DRIVE_SPEED)
+for x in range(1, 9):
+    move_forward()
+    ev3.speaker.beep()
+
+for x in range(1, 9):
+    move_backward()
+    ev3.speaker.beep()
