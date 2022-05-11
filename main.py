@@ -2,5 +2,5 @@
 
 import path_manager
 
-path_manager.follow_path("fffrfblrlfflfbbr")
-path_manager.follow_path("lflffffffff")
+path_manager.follow_path("frffr")
+path_manager.follow_path("bbbbbbbb")

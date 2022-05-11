@@ -1,5 +1,15 @@
 import motion_and_perception as robot
 
+grid = [[0, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 0]]
+
 def follow_path(path):
     """
     follow the path given on a string
