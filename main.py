@@ -24,61 +24,45 @@ DRIVE_SPEED = 120
 # This program requires LEGO EV3 MicroPython v2.0 or higher.
 # Click "Open user guide" on the EV3 extension tab for more information.
 
-def follow_line(speed):
+def follow_line(speed, direction=1):
     while True:
         left_is_white = left_line_sensor.reflection() > 15
         right_is_white = right_line_sensor.reflection() > 15
 
         if left_is_white and right_is_white:
-            robot.drive(speed, 0)
+            robot.drive(speed*direction, 0)
         if left_is_white and not right_is_white:
-            robot.drive(speed, 30)
+            robot.drive(speed*direction, 30)
         if not left_is_white and right_is_white:
-            robot.drive(speed, -30)
+            robot.drive(speed*direction, -30)
         if not left_is_white and not right_is_white:
             robot.stop(Stop.BRAKE)
             break
 
         wait(10)
 
-def move_backward():
+def move_back():
     """
-    Robot moves backward following a line to the next corner on the back
+    Robot moves to the corner in the back
     """
-    speed = 50
-
     robot.drive(-50, 0)
     wait(500)
 
-    while True:
-        left_is_white = left_line_sensor.reflection() > 15
-        right_is_white = right_line_sensor.reflection() > 15
+    follow_line(50, direction = -1)
 
-        if left_is_white and right_is_white:
-            robot.drive(-speed, 0)
-        if left_is_white and not right_is_white:
-            robot.drive(speed, 30)
-        if not left_is_white and right_is_white:
-            robot.drive(speed, -30)
-        if not left_is_white and not right_is_white:
-            robot.stop(Stop.BRAKE)
-            break
-
-        wait(10)
-
-def move_forward():
+def move_front():
     """
-    Robot moves forward following a line to the next corner on the front
+    Robot moves to the corner in the front
     """
-
-    speed = DRIVE_SPEED
-    
     robot.drive(50, 0)
     wait(500)
 
-    follow_line(speed)
+    follow_line(DRIVE_SPEED)
 
 def turn_right():
+    """
+    Robot moves to the corner in the right
+    """
     robot.drive(50, 50)
     wait(1000)
 
@@ -91,6 +75,9 @@ def turn_right():
     robot.stop(Stop.BRAKE)
 
 def turn_left():
+    """
+    Robot moves to the corner in the left
+    """
     robot.drive(50, -50)
     wait(1000)
 
@@ -110,8 +97,11 @@ ev3 = EV3Brick()
 # Write your program here.
 ev3.speaker.beep()
 
-for x in range(0, 16):
+move_front()
+move_back()
+
+for x in range(0, 4):
     turn_left()
-    move_forward()
+    move_front()
 
 ev3.speaker.beep()
