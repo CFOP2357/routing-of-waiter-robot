@@ -1,6 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 
 import path_manager
+from constants import *
 
-path_manager.follow_path("frffr")
-path_manager.follow_path("bbbbbbbb")
+print(path_manager.generate_path((8, 0), FRONT, (0, 3)))

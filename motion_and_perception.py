@@ -6,6 +6,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
+from constants import *
 
 DRIVE_SPEED = 120
 
@@ -19,14 +20,6 @@ right_line_sensor = ColorSensor(Port.S4)
 
 # Initialize the drive base.
 robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
-
-FORWARD = 1
-BACKWARD = -1
-
-FRONT = 0
-RIGHT = 1
-BACK = 2
-LEFT = 3
 
 current_direction = 0 #0 = front, 1 = right, 2 = back, 3 = left
 x_position = 0
