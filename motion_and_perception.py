@@ -23,7 +23,7 @@ robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
 
 current_direction = 0 #0 = front, 1 = right, 2 = back, 3 = left
 x_position = 0
-y_position = 0
+y_position = 8
 
 def follow_line(speed, direction=FORWARD, turn_speed=30):
     """
@@ -53,6 +53,10 @@ def follow_line(speed, direction=FORWARD, turn_speed=30):
     robot.stop(Stop.BRAKE)
 
 def update_position(direction):
+    global y_position
+    global current_direction
+    global x_position
+
     if current_direction == FRONT:
         y_position -= direction
     if current_direction == RIGHT:

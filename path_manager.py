@@ -8,15 +8,12 @@ def construct_path(begin_position, begin_orientation, end_position, dp):
 
     orientation = FRONT
     for i in range(4):
-        if dp[y][x][i] < dp[y][x][orientation]:
+        if dp[y][x][i] and dp[y][x][i] < dp[y][x][orientation]:
             orientation = i
 
     ans = ""
-
-    print(orientation)
     
     while (y, x) != begin_position:
-        print(((y, x), ans))
         #FROM fwd
         if orientation == FRONT and y < 8 and dp[y+1][x][FRONT] == dp[y][x][orientation]-1:
             orientation = FRONT
@@ -152,7 +149,6 @@ def find_shortest_path(begin_position, begin_orientation):
 
 def generate_path(begin_position, begin_orientation, end_position):
     dp = find_shortest_path(begin_position, begin_orientation)
-    print(dp[0][3][0])
     return construct_path(begin_position, begin_orientation, end_position, dp)
 
 
