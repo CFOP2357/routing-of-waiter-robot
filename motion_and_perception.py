@@ -11,7 +11,7 @@ DRIVE_SPEED = 120
 
 # Initialize the motors.
 left_motor = Motor(Port.A)
-right_motor = Motor(Port.D)
+right_motor = Motor(Port.D) 
 
 # Initialize the color sensor.
 left_line_sensor = ColorSensor(Port.S3)
@@ -20,9 +20,21 @@ right_line_sensor = ColorSensor(Port.S4)
 # Initialize the drive base.
 robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
 
-def follow_line(speed, direction=1, turn_speed=30):
+FORWARD = 1
+BACKWARD = -1
+
+FRONT = 0
+RIGHT = 1
+BACK = 2
+LEFT = 3
+
+current_direction = 0 #0 = front, 1 = right, 2 = back, 3 = left
+x_position = 0
+y_position = 0
+
+def follow_line(speed, direction=FORWARD, turn_speed=30):
     """
-    Follw black line betwen the two sensors until black in both sensors is detected
+    Follow black line betwen the two sensors until black in both sensors is detected
     (follow line until sensors on corner)
     """
     while True:
@@ -47,17 +59,29 @@ def follow_line(speed, direction=1, turn_speed=30):
 
     robot.stop(Stop.BRAKE)
 
+def update_position(direction):
+    if current_direction == FRONT:
+        y_position -= direction
+    if current_direction == RIGHT:
+        x_position += direction
+    if current_direction == BACK:
+        y_position += direction
+    if current_direction == LEFT:
+        x_position -= direction
+
 def move_back():
     """
     Robot moves to the corner in the back
     """
     robot.drive(-100, 0)
     wait(1000)
-    follow_line(speed = 50, direction = 1, turn_speed = 30)
+    follow_line(speed = 50, direction = FORWARD, turn_speed = 30)
 
     robot.drive(-50, 0)
     wait(500)
-    follow_line(speed = 50, direction = -1, turn_speed = 10)
+    follow_line(speed = 50, direction = BACKWARD, turn_speed = 10)
+
+    update_position(BACKWARD)
 
 def move_front(speed=DRIVE_SPEED):
     """
@@ -67,6 +91,7 @@ def move_front(speed=DRIVE_SPEED):
     wait(500)
 
     follow_line(speed)
+    update_position(FORWARD)
 
 def move_right():
     """
@@ -82,6 +107,12 @@ def move_right():
 
     follow_line(DRIVE_SPEED)
 
+    global current_direction
+    current_direction += 1
+    if current_direction == 4:
+        current_direction = 0
+    update_position(FORWARD)
+
 def move_left():
     """
     Robot moves to the corner in the left
@@ -95,6 +126,12 @@ def move_left():
         robot.drive(50, -50)
 
     follow_line(DRIVE_SPEED)
+
+    global current_direction
+    current_direction -= 1
+    if current_direction == -1:
+        current_direction = 3
+    update_position(FORWARD)
 
 
 
