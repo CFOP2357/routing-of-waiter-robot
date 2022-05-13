@@ -4,6 +4,9 @@ import motion_and_perception as robot
 from constants import *
 
 def construct_path(begin_position, begin_orientation, end_position, dp):
+    """
+    reconstruct the shortest path from begin position to end position from the dp
+    """
     [y, x] = end_position
 
     orientation = FRONT
@@ -89,6 +92,9 @@ def construct_path(begin_position, begin_orientation, end_position, dp):
     return ans
 
 def find_shortest_path(begin_position, begin_orientation):
+    """
+    make dijstrak to find the lenght of the shortest path from begin position to each position 
+    """
     dp = [[[0 for a in range(4)] for a in range(4)] for a in range(9)] #x, y, orientation
 
     priority_queue = [(1, begin_position, begin_orientation)]
@@ -150,9 +156,10 @@ def find_shortest_path(begin_position, begin_orientation):
     return dp
 
 def generate_path(begin_position, begin_orientation, end_position):
+    """
+    Generate path from begin position to end position
+    """
     dp = find_shortest_path(begin_position, begin_orientation)
-    #print("dp done")
-    #print((dp[1][0][LEFT], dp[1][1][LEFT]))
     return construct_path(begin_position, begin_orientation, end_position, dp)
 
 
